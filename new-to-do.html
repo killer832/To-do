@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To Do App</title>
+</head>
+<style>
+  
+  body{
+    font-family: arial;
+      background-color: rgb(20, 20, 36);
+    }
+    .body-div{
+      display: flex;
+      column-gap: 20px;
+      color: white;
+    }
+    .paraTask{
+      margin-left: 20px;
+    }
+    .paraDate{
+      background-color: rgba(0, 94, 255, 0.685);
+      width: 100px;
+      padding-left: 18px;
+      border-radius: 20px;
+      cursor: pointer;      
+    }
+    .text-box-js{
+      padding: 8px 12px;
+      margin-left: 20px;
+      width: 200px;
+      border: none;  
+      font-style: italic;
+      border-radius: 20px;
+      
+    }
+    .js-date-box{
+      padding: 8px 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 15px;
+      font-style: italic;
+    }
+    .Add-button{
+      padding: 8px 30px;
+      background-color: rgb(1, 158, 255);
+      font-weight: bold;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border: none;
+      border-radius: 20px;
+      transition: background-color 0.15s ;
+    }
+    .Add-button:hover{
+      background-color: rgb(0, 183, 255);
+    }
+    .ented-task-div{
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 200px 150px 100px;
+      align-items: center;
+      row-gap: 12px;
+      column-gap: 25px;
+      color: white;
+    }
+    .Add-button:active{
+      opacity: 0.9;
+    }
+    .Delete-button{
+      background-color: rgb(255, 13, 0);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 2px;
+      
+      align-items: stretch;
+      cursor: pointer;
+      transition: background-color 0.15s, opacitiy 0.15s ;
+    }
+    .Delete-button:hover{
+      background-color: rgb(221, 41, 0);
+    }
+    .Delete-button:active{
+      opacity: 0.9;
+    }
+    
+    </style>
+<body>
+  <div style="display: flex;align-items: center;column-gap: 10px; background-color: rgb(75, 43, 236); color: white; font-weight: bold; position: fixed; top: 0; left: 0; right: 0;padding: 15px; ">
+    <img style="width: 20px; margin-left: 10px;" src="/pngegg.png" alt="">
+    <span>To Do List</span>
+  </div>
+  <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 22%;">
+    <div class="body-div">
+      <input id="myInput" class="text-box-js"  placeholder="Enter To Do" type="text"> 
+      <input class="js-date-box"  type="date" name="" id=""> 
+      <button class="Add-button"onclick="entedTask()">Add</button>
+    </div>
+    <div class="text-div-js"></div>
+  </div>
+  
+  <script>
+    
+      
+    let toDo = [];
+
+
+    document.getElementById("myInput").addEventListener("keydown", function (event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        entedTask();
+      }
+    });
+    function renderToDo() {
+      let toDoTaskHtml = '';
+      for (let i = 0; i < toDo.length; i++) {
+        const toDoTask = toDo[i];
+        toDoTaskHtml += `
+          <div class="ented-task-div">
+            <div><p class="paraTask">${toDoTask.task}</p></div>
+            <div><p class="paraDate">${toDoTask.date}</p></div>
+            <div><button onclick="removeTask(${i})" class="Delete-button">Delete</button></div>
+          </div>
+        `;
+      }
+      document.querySelector('.text-div-js').innerHTML = toDoTaskHtml;
+    }
+
+    function removeTask(index) {
+      toDo.splice(index, 1);
+      renderToDo();
+    }
+
+    function entedTask() {
+      const task = document.querySelector('.text-box-js').value;
+      let date = document.querySelector('.js-date-box').value;
+      
+
+
+      if (task === "") {
+        alert("Please enter a task");
+        return;
+      }
+
+      if (!date) {
+          date = "No due date";
+      }
+
+      toDo.push({ task, date });
+      document.querySelector('.text-box-js').value = "";
+      document.querySelector('.js-date-box').value = "";
+      renderToDo();
+    }
+    
+     
+
+  </script>
+</body>
+</html>
